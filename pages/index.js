@@ -1,0 +1,354 @@
+import React,{useEffect, useState} from 'react';
+import { SiStencyl } from 'react-icons/si'
+
+import Web3 from 'web3'
+import artifact from './artifacts/index.json'
+
+import { ethers } from 'ethers'
+
+import pcsRouter from './web3/pcsRouter'
+
+const bnb = {
+  address: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
+  decimals: 18,
+}
+const busd = {
+  address: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+  decimals: 18,
+}
+
+const provider = new ethers.providers.JsonRpcProvider("https://bsc-dataseed1.defibit.io/")
+  
+const tikiContractAddress = '0x38fc3f9b261a402954242718a42fb210a5ac6126'
+const tikiDecimals = 18
+const tikiAbi = artifact
+const tikiContract = new ethers.Contract(tikiContractAddress, tikiAbi, provider)
+const pcsRouterContract = new ethers.Contract(pcsRouter.address, pcsRouter.abi, provider)
+
+
+  
+  async function getAmountsOut(quoteAmount, path) {
+  return await pcsRouterContract.functions['getAmountsOut'](
+    quoteAmount,
+    path,
+    { gasLimit: 1000000000000 }
+  )
+}
+
+async function getTikiPrice() {
+  const functionResponse = await getAmountsOut(`${1 * Math.pow(10, tikiDecimals)}`, [tikiContractAddress, bnb.address, busd.address])
+  const priceInUsd = Number(functionResponse.amounts[2].toString()) / Math.pow(10, busd.decimals)
+  // console.log('tiki', priceInUsd)
+  return priceInUsd
+}
+
+  async function getBnbPrice() {
+  const functionResponse = await getAmountsOut(`${1 * Math.pow(10, bnb.decimals)}`, [bnb.address, busd.address])
+  const priceInUsd = Number(functionResponse?.amounts[1].toString()) / Math.pow(10, busd.decimals)
+  // console.log('bnb', priceInUsd)
+  return priceInUsd
+}
+  
+
+  
+  // const address = "0x63222b8120e7b72D9a39093f44cb0a9dea629132";
+
+  
+
+  let timer
+
+
+
+
+
+
+  async function getMetamaskWallet() {
+  let metamask
+  try {
+    metamask = new ethers.providers.Web3Provider(window.ethereum, 56);
+  } catch (e) {
+    console.log('wrong chain')
+    return null
+    }
+  // Prompt user for account connections
+    await metamask.send("eth_requestAccounts", []).then((res) => {
+
+  })
+  return metamask.getSigner();
+  // metamask.getSigner().getAddress
+}
+
+  async function getWallet() {
+
+  const wallet = await getMetamaskWallet()
+  if (wallet === null) return
+
+
+  const tikiContract = new ethers.Contract(tikiContractAddress, tikiAbi, wallet)
+
+  const walletAddr = await wallet.getAddress()
+
+  return [wallet, walletAddr, tikiContract]
+
+}
+  
+          function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  }
+  
+  async function getTikiVolume() {
+  const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tiki-token&vs_currencies=usd&include_market_cap=false&include_24hr_vol=true&include_24hr_change=false&include_last_updated_at=false')
+  const resolved = await res.json()
+  const volume = resolved['tiki-token'].usd_24h_vol
+  return volume
+}
+
+ 
+
+export default function Home() {
+
+  const [wallet, setWallet] = useState(null)
+
+  const [holdings, setHoldings] = useState(0)
+  const [bnbHoldings,setBnbHoldings] = useState(0)
+  const [paid, setPaid] = useState(0)
+  const [lastPaid, setLastPaid] = useState(0)
+  const [nextPayoutProgress, setNextPayoutProgress] = useState(0)
+  const [nextPayoutValue, setNextPayoutValue] = useState(0)
+
+  const [refreshAddressData, setRefreshAddressData] = useState(true)
+  const [refreshTimeData, setRefreshTimeData] = useState(true)
+
+  const [tikiVolume, setTikiVolume] = useState(null)
+  const [bnbPrice, setBnbPrice] = useState(null)
+  const [tikiPrice, setTikiPrice] = useState(null)
+
+  const [address, setAddress] = useState(null)
+
+  useEffect(() => {
+      
+    getTikiVolume().then(res => {
+      setTikiVolume(res)
+    })
+
+
+
+    
+    getBnbPrice().then(res => {
+      setBnbPrice(res)
+    })
+
+    getTikiPrice().then(res => {
+      setTikiPrice(res)
+    })
+
+
+
+           getWallet().then(wallet => {
+                    setWallet(wallet[0])
+                    setAddress(wallet[1])
+       })
+    
+    if (ethers.utils.isAddress(address)) {
+      if (localStorage.getItem('address') !== address) localStorage.setItem('address', address)
+      callContract(address)
+    }
+    }, [address, refreshAddressData])
+  
+   const earningsInDollars = tikiVolume == 0 ? (holdings/1000000000)*220000 : (holdings/1000000000)*(tikiVolume*0.11)
+  const earningsInBnb = earningsInDollars/bnbPrice
+  
+    const compoundedTikiAfterNDays = (starting, days) => {
+    let accumulatedTiki = Number(starting)
+    for (let i = 0; i < days; i++) {
+      accumulatedTiki = tikiVolume == 0 ? accumulatedTiki + (((accumulatedTiki/1000000000)*220000)/bnbPrice) : accumulatedTiki + (((accumulatedTiki/1000000000)*(tikiVolume*0.11))/bnbPrice)
+    }
+    return accumulatedTiki.toFixed(0)
+  }
+
+    const callContract = () => {
+    tikiContract.getNumberOfDividendTokenHolders().then(holders => {
+      tikiContract.balanceOf(address).then(balance => {
+        setHoldings((balance / 1e18).toFixed(0))
+          tikiContract.getAccountDividendsInfo(address).then(result => {
+            provider.getBalance(address).then(balance => {
+              setBnbHoldings((balance/1e18).toFixed(4))
+              setPaid( parseInt(result[4]._hex, 16) - parseInt(result[3]._hex, 16) )
+              setLastPaid(parseInt(result[5]._hex, 16)*1000)
+              setNextPayoutProgress((100-((parseInt(result[2]._hex, 16)/parseInt(holders._hex, 16))*100)).toFixed(0))
+              setNextPayoutValue( (parseInt(result[3]._hex, 16)/1e18).toFixed(4) )
+              window.clearTimeout(timer);
+              timer = window.setTimeout(function(){ setRefreshAddressData(!refreshAddressData) }, 9000);
+            })
+          })
+        })
+    })
+    }
+
+  return (
+    <div className="h-screen  overflow-y-scroll ">
+      <div className="max-w-screen-lg mx-auto py-5 mb-10">
+        <section className="">
+          <div className="w-11/12  mx-auto ">
+            <h1 className="text-4xl font-semibold text-black dark:text-white">BNBHODL Earnings Manager</h1>
+            <div className="text-white text-xl flex flex-row justify-between p-3 my-3 rounded bg-yellow-600">
+              <div>
+                <h1>Please enter your address above</h1>
+              </div>
+              <div>
+                <h1>
+                  Buy a BNBHODL
+                </h1>
+              </div>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4  ">
+              <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800">
+                <div className="p-4 flex items-center">
+                  <div className="p-3 rounded-md text-orange-500 dark:text-orange-100 bg-orange-100 dark:bg-orange-500 mr-4">
+                    <SiStencyl className="text-2xl" />
+                  </div>
+                  <div>
+                    <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Your BNBHODL Holdings</p>
+                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">0 BNBHODL</p>
+                  </div>
+                </div>
+              </div>
+              <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800">
+                <div className="p-4 flex items-center">
+                  <div className="p-3 rounded-md text-orange-500 dark:text-orange-100 bg-orange-100 dark:bg-orange-500 mr-4">
+                    <SiStencyl className="text-2xl" />
+                  </div>
+                  <div>
+                    <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Your BNBHODL Holdings</p>
+                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">0 BNBHODL</p>
+                  </div>
+                </div>
+              </div>
+              <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800">
+                <div className="p-4 flex items-center">
+                  <div className="p-3 rounded-md text-orange-500 dark:text-orange-100 bg-orange-100 dark:bg-orange-500 mr-4">
+                    <SiStencyl className="text-2xl" />
+                  </div>
+                  <div>
+                    <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Your BNBHODL Holdings</p>
+                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">0 BNBHODL</p>
+                  </div>
+                </div>
+              </div>
+              <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800">
+                <div className="p-4 flex items-center">
+                  <div className="p-3 rounded-md text-orange-500 dark:text-orange-100 bg-orange-100 dark:bg-orange-500 mr-4">
+                    <SiStencyl className="text-2xl" />
+                  </div>
+                  <div>
+                    <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Your BNBHODL Holdings</p>
+                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">0 BNBHODL</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800 mt-4">
+              <div className="p-4 flex items-center">
+                <button className="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-4 py-2 rounded-lg text-sm text-white bg-yellow-600 border border-transparent opacity-50 w-full h-full  " disabled type="button">Payout Is Processing</button>
+              </div>
+            </div>
+
+
+
+
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              <div className="border border-gray-300 min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800 col-span-2">
+                <div className="p-4 flex flex-col text-center items-center">
+                  <img className="w-32 h-32 mb-4 mt-4" src="https://tikitoken.app/static/media/bnb.162aaf57.png" />
+                  <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total BNB Paid To BNBHODL Holders</p>
+                  <p className="text-green-400 dark:text-green-400 text-4xl md:text-6xl text-center mb-8">
+                    17,555
+                    <span className="text-yellow-300">BNB</span>
+                    <br />
+                    =$5,122,290
+                  </p>
+                </div>
+              </div>
+
+              <div className="border border-gray-300 min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800 col-span-2 lg:col-span-1">
+                <div className="p-4 flex flex-col text-center items-center">
+                  <img className="w-32 h-32 mb-4 mt-4" src="https://tikitoken.app/static/media/money.d301ec34.png" />
+                  <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">
+                    Your {numberWithCommas(holdings)} BNBHODL Earns:
+                  </p>
+                  <div className="flex">
+                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
+                      <span className="text-yellow-300">{numberWithCommas(earningsInBnb.toFixed(2))} BNB</span>(${numberWithCommas((earningsInDollars).toFixed(2))})
+                      <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Day</span>
+                    </p>
+                  </div>
+                  <div className="flex">
+                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
+                      <span className="text-yellow-300">{numberWithCommas((earningsInBnb*7).toFixed(2))}</span>(${numberWithCommas((earningsInDollars*7).toFixed(2))})
+                      <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Week</span>
+                    </p>
+                  </div>
+                  <div className="flex">
+                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
+                      <span className="text-yellow-300">{numberWithCommas((earningsInBnb*30).toFixed(2))} </span>(${numberWithCommas((earningsInDollars*7).toFixed(2))})
+                      <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Month</span>
+                    </p>
+                  </div>
+                  <div className="flex">
+                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
+                      <span className="text-yellow-300">{numberWithCommas((earningsInBnb*365).toFixed(2))}</span>(${numberWithCommas((earningsInDollars*365).toFixed(2))})
+                      <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Year</span>
+                    </p>
+                  </div>
+                  <p className="text-gray-600 py-1 dark:text-gray-400 text-xl text-center -mt-2">Dynamic estimations based on 24h of trading volume 30,000
+                  </p>
+                </div>
+              </div>
+
+
+
+              <div className="border border-gray-300 min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800 col-span-2 lg:col-span-1">
+                <div className="p-4 flex flex-col text-center items-center">
+                  <img className="w-32 h-32 mb-4 mt-4" src="https://tikitoken.app/static/media/money.d301ec34.png" />
+                  <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">
+                    Your {numberWithCommas(holdings)} BNBHODL Earns:
+                  </p>
+                  <div className="flex">
+                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
+                      <span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 7)) : '0'} BNB</span>($0.00)
+                      <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">In a Week</span>
+                    </p>
+                  </div>
+                  <div className="flex">
+                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
+                      <span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 30)) : '0'}</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 30)/holdings).toFixed(2) : '0'}x Earnings)
+                      <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">In a Month</span>
+                    </p>
+                  </div>
+                  <div className="flex">
+                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
+                      <span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 182)) : '0'} </span>({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 182)/holdings).toFixed(2) : '0'}x Earnings)
+                      <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">In 6 Months</span>
+                    </p>
+                  </div>
+                  <div className="flex">
+                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
+                      <span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 365)) : '0'}</span>({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 365)/holdings).toFixed(2) : '0'}x Earnings)
+                      <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">In 1 Year</span>
+                    </p>
+                  </div>
+                  <p className="text-gray-600 py-1 dark:text-gray-400 text-xl text-center -mt-2">Estimations are based on current BNBHODL price (${tikiPrice?.toFixed(6)})
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+            </div>
+    
+    </div>
+  )
+}
