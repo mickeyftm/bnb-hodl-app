@@ -597,11 +597,11 @@ export default function Home() {
                 <div className="p-4 flex flex-col text-center items-center">
                   <img className="w-32 h-32 mb-4 mt-4" src="https://bnb-hodl-app.vercel.app/dividend.png" />
                   <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">
-                    Your {numberWithCommas(holdings)} TIKI Earns:
+                    Your {numberWithCommas(holdings)} TIKI Earns in WMATIC:
                   </p>
                   <div className="flex">
                     <p className="text-green-400 dark:text-green-400 text-2xl text-center">
-                      <span className="text-yellow-300">{numberWithCommas(earningsInBnb.toFixed(2))} WMATIC</span>(${numberWithCommas((earningsInDollars).toFixed(2))})
+                      <span className="text-yellow-300">{numberWithCommas(earningsInBnb.toFixed(2))}</span>(${numberWithCommas((earningsInDollars).toFixed(2))})
                       <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Day</span>
                     </p>
                   </div>
@@ -634,11 +634,11 @@ export default function Home() {
                 <div className="p-4 flex flex-col text-center items-center">
                   <img className="w-32 h-32 mb-4 mt-4" src="https://bnb-hodl-app.vercel.app/dividend.png" />
                   <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">
-                    Your {numberWithCommas(holdings)} BNBHODL Earns:
+                    Your {numberWithCommas(holdings)} TIKI Earns in TIKI:
                   </p>
                   <div className="flex">
                     <p className="text-green-400 dark:text-green-400 text-2xl text-center">
-                      <span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 7)) : '0'} BNB</span>($0.00)
+                      <span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 7)) : '0'}</span>($0.00)
                       <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">In a Week</span>
                     </p>
                   </div>
