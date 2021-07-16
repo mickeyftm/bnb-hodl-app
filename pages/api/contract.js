@@ -2,11 +2,11 @@ import Web3 from "web3"
 
 const getDividendInfo = (address,artifact) => {
 
-    const contractAddress = "0x38fc3f9b261a402954242718a42fb210a5ac6126";
+    const contractAddress = "0x179A7676FD99D5B01C40ddA280960594A90827cf";
   
     const web3Ws = new Web3(
     new Web3.providers.HttpProvider(
-      "https://bsc-dataseed.binance.org/"
+      "https://rpc-polygaj-mainnet.maticvigil.com/v1/654c0320abdd4f57a024704882287f917e816992"
         ))
     
     function numberWithCommas(x) {

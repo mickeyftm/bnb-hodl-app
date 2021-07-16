@@ -9,7 +9,7 @@ import { ethers } from 'ethers'
 
 const pcsRouter = {
   // address: '0x05ff2b0db69458a0750badebc4f9e13add608c7f',
-  address: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
+  address: '0xa5E0829CaCEd8fFDD4De3c43696c57F7D7A678ff',
   abi: [
     {
       inputs: [
@@ -378,17 +378,17 @@ const pcsRouter = {
   ],
 }
 const bnb = {
-  address: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
+  address: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
   decimals: 18,
 }
 const busd = {
-  address: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
-  decimals: 18,
+  address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
+  decimals: 6,
 }
 
-const provider = new ethers.providers.JsonRpcProvider("https://bsc-dataseed1.defibit.io/")
+const provider = new ethers.providers.JsonRpcProvider("https://rpc-polygaj-mainnet.maticvigil.com/v1/654c0320abdd4f57a024704882287f917e816992")
   
-const tikiContractAddress = '0x38fc3f9b261a402954242718a42fb210a5ac6126'
+const tikiContractAddress = '0x179A7676FD99D5B01C40ddA280960594A90827cf'
 const tikiDecimals = 18
 const tikiAbi = artifact
 const tikiContract = new ethers.Contract(tikiContractAddress, tikiAbi, provider)
