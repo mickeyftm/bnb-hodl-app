@@ -701,7 +701,7 @@ export default function Home() {
                     =$0
                   </p>
                   <br />
-                  <p className="text-gray-600 py-1 dark:text-gray-400 text-xl text-center -mt-2">It will be updated at 3pm UTC everyday.
+                  <p className="text-gray-600 py-1 dark:text-gray-400 text-xl text-center -mt-2">It will be updated at 3pm UTC everyday.</p>
                 </div>
              </div>
           </div>
