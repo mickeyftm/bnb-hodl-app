@@ -570,6 +570,52 @@ export default function Home() {
                 </h1>
               </div>
             </div>
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4  ">
+              <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800">
+                <div className="p-4 flex items-center">
+                  <div className="p-3 rounded-md text-orange-500 dark:text-orange-100 bg-orange-100 dark:bg-orange-500 mr-4">
+                    <SiStencyl className="text-2xl" />
+                  </div>
+                  <div>
+                    <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Your TIKI Holdings</p>
+                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">{numberWithCommas(holdings)} TIKI</p>
+                  </div>
+                </div>
+              </div>
+              <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800">
+                <div className="p-4 flex items-center">
+                  <div className="p-3 rounded-md text-orange-500 dark:text-orange-100 bg-orange-100 dark:bg-orange-500 mr-4">
+                    <SiStencyl className="text-2xl" />
+                  </div>
+                  <div>
+                    <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Total WMATIC Paid</p>
+                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">{numberWithCommas(paid)} WMATIC</p>
+                  </div>
+                </div>
+              </div>
+              <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800">
+                <div className="p-4 flex items-center">
+                  <div className="p-3 rounded-md text-orange-500 dark:text-orange-100 bg-orange-100 dark:bg-orange-500 mr-4">
+                    <SiStencyl className="text-2xl" />
+                  </div>
+                  <div>
+                    <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Your WMATIC Balance</p>
+                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">{numberWithCommas(bnbHoldings)} WMATIC</p>
+                  </div>
+                </div>
+              </div>
+              <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800">
+                <div className="p-4 flex items-center">
+                  <div className="p-3 rounded-md text-orange-500 dark:text-orange-100 bg-orange-100 dark:bg-orange-500 mr-4">
+                    <SiStencyl className="text-2xl" />
+                  </div>
+                  <div>
+                    <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Next Payout Progress</p>
+                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">{numberWithCommas(nextPayoutProgress)}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
 
             <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800 mt-4">
