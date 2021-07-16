@@ -693,7 +693,7 @@ export default function Home() {
             <div className="border border-gray-300 min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800 col-span-2">
                 <div className="p-4 flex flex-col text-center items-center">
                   <img className="w-32 h-32 mb-4 mt-4" src="https://bnb-hodl-app.vercel.app/polygon.png" />
-                  <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total WMATIC Paid To TIKI Holders.
+                  <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total WMATIC Paid To TIKI Holders</p>
                   <p className="text-green-500 dark:text-green-500 text-4xl md:text-6xl text-center mb-8">
                     0
                     <span className="text-yellow-500">WMATIC</span>
