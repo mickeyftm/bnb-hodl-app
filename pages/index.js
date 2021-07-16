@@ -570,52 +570,6 @@ export default function Home() {
                 </h1>
               </div>
             </div>
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4  ">
-              <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800">
-                <div className="p-4 flex items-center">
-                  <div className="p-3 rounded-md text-orange-500 dark:text-orange-100 bg-orange-100 dark:bg-orange-500 mr-4">
-                    <SiStencyl className="text-2xl" />
-                  </div>
-                  <div>
-                    <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Your BNBHODL Holdings</p>
-                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">0 BNBHODL</p>
-                  </div>
-                </div>
-              </div>
-              <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800">
-                <div className="p-4 flex items-center">
-                  <div className="p-3 rounded-md text-orange-500 dark:text-orange-100 bg-orange-100 dark:bg-orange-500 mr-4">
-                    <SiStencyl className="text-2xl" />
-                  </div>
-                  <div>
-                    <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Your BNBHODL Holdings</p>
-                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">0 BNBHODL</p>
-                  </div>
-                </div>
-              </div>
-              <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800">
-                <div className="p-4 flex items-center">
-                  <div className="p-3 rounded-md text-orange-500 dark:text-orange-100 bg-orange-100 dark:bg-orange-500 mr-4">
-                    <SiStencyl className="text-2xl" />
-                  </div>
-                  <div>
-                    <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Your BNBHODL Holdings</p>
-                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">0 BNBHODL</p>
-                  </div>
-                </div>
-              </div>
-              <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800">
-                <div className="p-4 flex items-center">
-                  <div className="p-3 rounded-md text-orange-500 dark:text-orange-100 bg-orange-100 dark:bg-orange-500 mr-4">
-                    <SiStencyl className="text-2xl" />
-                  </div>
-                  <div>
-                    <p className="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">Your BNBHODL Holdings</p>
-                    <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">0 BNBHODL</p>
-                  </div>
-                </div>
-              </div>
-            </div>
 
 
             <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800 mt-4">
@@ -625,18 +579,16 @@ export default function Home() {
             </div>
 
 
-
-
             <div className="grid grid-cols-2 gap-4 mt-4">
               <div className="border border-gray-300 min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800 col-span-2">
                 <div className="p-4 flex flex-col text-center items-center">
                   <img className="w-32 h-32 mb-4 mt-4" src="https://tikitoken.app/static/media/bnb.162aaf57.png" />
-                  <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total BNB Paid To BNBHODL Holders</p>
+                  <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total WMATIC Paid To TIKI Holders<br />It will be updated at 3pm UTC everyday </p>
                   <p className="text-green-400 dark:text-green-400 text-4xl md:text-6xl text-center mb-8">
-                    17,555
-                    <span className="text-yellow-300">BNB</span>
+                    0
+                    <span className="text-yellow-300">WMATIC</span>
                     <br />
-                    =$5,122,290
+                    =$0
                   </p>
                 </div>
               </div>
@@ -645,11 +597,11 @@ export default function Home() {
                 <div className="p-4 flex flex-col text-center items-center">
                   <img className="w-32 h-32 mb-4 mt-4" src="https://tikitoken.app/static/media/money.d301ec34.png" />
                   <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">
-                    Your {numberWithCommas(holdings)} BNBHODL Earns:
+                    Your {numberWithCommas(holdings)} TIKI Earns:
                   </p>
                   <div className="flex">
                     <p className="text-green-400 dark:text-green-400 text-2xl text-center">
-                      <span className="text-yellow-300">{numberWithCommas(earningsInBnb.toFixed(2))} BNB</span>(${numberWithCommas((earningsInDollars).toFixed(2))})
+                      <span className="text-yellow-300">{numberWithCommas(earningsInBnb.toFixed(2))} WMATIC</span>(${numberWithCommas((earningsInDollars).toFixed(2))})
                       <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Day</span>
                     </p>
                   </div>
@@ -661,7 +613,7 @@ export default function Home() {
                   </div>
                   <div className="flex">
                     <p className="text-green-400 dark:text-green-400 text-2xl text-center">
-                      <span className="text-yellow-300">{numberWithCommas((earningsInBnb*30).toFixed(2))} </span>(${numberWithCommas((earningsInDollars*7).toFixed(2))})
+                      <span className="text-yellow-300">{numberWithCommas((earningsInBnb*30).toFixed(2))} </span>(${numberWithCommas((earningsInDollars*30).toFixed(2))})
                       <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Month</span>
                     </p>
                   </div>
