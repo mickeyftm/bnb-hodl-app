@@ -560,7 +560,7 @@ export default function Home() {
         <section className="">
           <div className="w-11/12  mx-auto ">
             <h1 className="text-4xl font-semibold text-black dark:text-white">BNBHODL Earnings Manager</h1>
-            <div className="text-white text-xl flex flex-row justify-between p-3 my-3 rounded bg-yellow-600">
+            <div className="text-white text-xl flex flex-row justify-between p-3 my-3 rounded bg-purple-600">
               <div>
                 <h1>Please enter your address above</h1>
               </div>
@@ -574,7 +574,7 @@ export default function Home() {
 
             <div className="min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800 mt-4">
               <div className="p-4 flex items-center">
-                <button className="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-4 py-2 rounded-lg text-sm text-white bg-yellow-600 border border-transparent opacity-50 w-full h-full  " disabled type="button">Payout Is Processing</button>
+                <button className="align-bottom inline-flex items-center justify-center cursor-pointer leading-5 transition-colors duration-150 font-medium focus:outline-none px-4 py-2 rounded-lg text-sm text-white bg-purple-600 border border-transparent opacity-50 w-full h-full  " disabled type="button">Payout Is Processing</button>
               </div>
             </div>
 
@@ -582,7 +582,7 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-4 mt-4">
               <div className="border border-gray-300 min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800 col-span-2">
                 <div className="p-4 flex flex-col text-center items-center">
-                  <img className="w-32 h-32 mb-4 mt-4" src="https://tikitoken.app/static/media/bnb.162aaf57.png" />
+                  <img className="w-32 h-32 mb-4 mt-4" src="https://bnb-hodl-app.vercel.app/polygon.png" />
                   <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total WMATIC Paid To TIKI Holders<br />It will be updated at 3pm UTC everyday </p>
                   <p className="text-green-400 dark:text-green-400 text-4xl md:text-6xl text-center mb-8">
                     0
@@ -595,7 +595,7 @@ export default function Home() {
 
               <div className="border border-gray-300 min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800 col-span-2 lg:col-span-1">
                 <div className="p-4 flex flex-col text-center items-center">
-                  <img className="w-32 h-32 mb-4 mt-4" src="https://tikitoken.app/static/media/money.d301ec34.png" />
+                  <img className="w-32 h-32 mb-4 mt-4" src="https://bnb-hodl-app.vercel.app/dividend.png" />
                   <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">
                     Your {numberWithCommas(holdings)} TIKI Earns:
                   </p>
@@ -632,7 +632,7 @@ export default function Home() {
 
               <div className="border border-gray-300 min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800 col-span-2 lg:col-span-1">
                 <div className="p-4 flex flex-col text-center items-center">
-                  <img className="w-32 h-32 mb-4 mt-4" src="https://tikitoken.app/static/media/money.d301ec34.png" />
+                  <img className="w-32 h-32 mb-4 mt-4" src="https://bnb-hodl-app.vercel.app/dividend.png" />
                   <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">
                     Your {numberWithCommas(holdings)} BNBHODL Earns:
                   </p>
