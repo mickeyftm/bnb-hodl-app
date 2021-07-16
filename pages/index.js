@@ -701,7 +701,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <br /><br />
+            <br />
             <div className="border border-gray-300 min-w-0 rounded-lg shadow-xs overflow-hidden bg-white dark:bg-gray-800 col-span-2">
                 <div className="p-4 flex flex-col text-center items-center">
                   <img className="w-32 h-32 mb-4 mt-4" src="https://bnb-hodl-app.vercel.app/polygon.png" />
@@ -717,6 +717,7 @@ export default function Home() {
                 </div>
              </div>
           </div>
+          <br />
         </section>
 
             </div>
