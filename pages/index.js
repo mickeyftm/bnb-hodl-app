@@ -584,9 +584,9 @@ export default function Home() {
                 <div className="p-4 flex flex-col text-center items-center">
                   <img className="w-32 h-32 mb-4 mt-4" src="https://bnb-hodl-app.vercel.app/polygon.png" />
                   <p className="mt-4 font-semibold text-gray-600 dark:text-gray-300 text-3xl text-center">Total WMATIC Paid To TIKI Holders<br />It will be updated at 3pm UTC everyday </p>
-                  <p className="text-green-400 dark:text-green-400 text-4xl md:text-6xl text-center mb-8">
+                  <p className="text-green-500 dark:text-green-500 text-4xl md:text-6xl text-center mb-8">
                     0
-                    <span className="text-yellow-300">WMATIC</span>
+                    <span className="text-yellow-500">WMATIC</span>
                     <br />
                     =$0
                   </p>
@@ -600,26 +600,26 @@ export default function Home() {
                     Your {numberWithCommas(holdings)} TIKI Earns in WMATIC:
                   </p>
                   <div className="flex">
-                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
-                      <span className="text-yellow-300">{numberWithCommas(earningsInBnb.toFixed(2))}</span>(${numberWithCommas((earningsInDollars).toFixed(2))})
+                    <p className="text-green-500 dark:text-green-500 text-2xl text-center">
+                      <span className="text-yellow-500">{numberWithCommas(earningsInBnb.toFixed(2))}</span>(${numberWithCommas((earningsInDollars).toFixed(2))})
                       <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Day</span>
                     </p>
                   </div>
                   <div className="flex">
-                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
-                      <span className="text-yellow-300">{numberWithCommas((earningsInBnb*7).toFixed(2))}</span>(${numberWithCommas((earningsInDollars*7).toFixed(2))})
+                    <p className="text-green-500 dark:text-green-500 text-2xl text-center">
+                      <span className="text-yellow-500">{numberWithCommas((earningsInBnb*7).toFixed(2))}</span>(${numberWithCommas((earningsInDollars*7).toFixed(2))})
                       <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Week</span>
                     </p>
                   </div>
                   <div className="flex">
-                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
-                      <span className="text-yellow-300">{numberWithCommas((earningsInBnb*30).toFixed(2))} </span>(${numberWithCommas((earningsInDollars*30).toFixed(2))})
+                    <p className="text-green-500 dark:text-green-500 text-2xl text-center">
+                      <span className="text-yellow-500">{numberWithCommas((earningsInBnb*30).toFixed(2))} </span>(${numberWithCommas((earningsInDollars*30).toFixed(2))})
                       <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Month</span>
                     </p>
                   </div>
                   <div className="flex">
-                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
-                      <span className="text-yellow-300">{numberWithCommas((earningsInBnb*365).toFixed(2))}</span>(${numberWithCommas((earningsInDollars*365).toFixed(2))})
+                    <p className="text-green-500 dark:text-green-500 text-2xl text-center">
+                      <span className="text-yellow-500">{numberWithCommas((earningsInBnb*365).toFixed(2))}</span>(${numberWithCommas((earningsInDollars*365).toFixed(2))})
                       <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">Per Year</span>
                     </p>
                   </div>
@@ -637,26 +637,26 @@ export default function Home() {
                     Your {numberWithCommas(holdings)} TIKI Earns in TIKI:
                   </p>
                   <div className="flex">
-                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
-                      <span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 7)) : '0'}</span>($0.00)
+                    <p className="text-green-500 dark:text-green-500 text-2xl text-center">
+                      <span className="text-yellow-500">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 7)) : '0'}</span>($0.00)
                       <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">In a Week</span>
                     </p>
                   </div>
                   <div className="flex">
-                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
-                      <span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 30)) : '0'}</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 30)/holdings).toFixed(2) : '0'}x Earnings)
+                    <p className="text-green-500 dark:text-green-500 text-2xl text-center">
+                      <span className="text-yellow-500">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 30)) : '0'}</span> ({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 30)/holdings).toFixed(2) : '0'}x Earnings)
                       <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">In a Month</span>
                     </p>
                   </div>
                   <div className="flex">
-                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
-                      <span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 182)) : '0'} </span>({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 182)/holdings).toFixed(2) : '0'}x Earnings)
+                    <p className="text-green-500 dark:text-green-500 text-2xl text-center">
+                      <span className="text-yellow-500">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 182)) : '0'} </span>({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 182)/holdings).toFixed(2) : '0'}x Earnings)
                       <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">In 6 Months</span>
                     </p>
                   </div>
                   <div className="flex">
-                    <p className="text-green-400 dark:text-green-400 text-2xl text-center">
-                      <span className="text-yellow-300">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 365)) : '0'}</span>({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 365)/holdings).toFixed(2) : '0'}x Earnings)
+                    <p className="text-green-500 dark:text-green-500 text-2xl text-center">
+                      <span className="text-yellow-500">{holdings != 0 ? numberWithCommas(compoundedTikiAfterNDays(holdings, 365)) : '0'}</span>({holdings != 0 ? (compoundedTikiAfterNDays(holdings, 365)/holdings).toFixed(2) : '0'}x Earnings)
                       <span className="text-gray-600 dark:text-gray-400 text-xl text-center ml-2 mt-2">In 1 Year</span>
                     </p>
                   </div>
